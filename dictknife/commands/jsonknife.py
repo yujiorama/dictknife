@@ -65,7 +65,7 @@ def select(
             ref_wrap = wrap
             if "@" in ref:
                 ref, ref_wrap = ref.split("@", 1)
-            extracted = expander.expand_subpart(expander.access(ref))
+            extracted = expander.expand(expander.access(ref))
             if ref_wrap:
                 assign_by_json_pointer(d, ref_wrap, extracted)
             else:

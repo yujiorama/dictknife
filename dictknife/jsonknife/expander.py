@@ -32,17 +32,17 @@ class Expander(object):
             return self.resolver.doc
         return self.accessor.access(ref)
 
-    def expand(self):
-        return self.expand_subpart(self.resolver.doc)
-
-    def expand_subpart(self, subpart, resolver=None, ctx=None):
+    def expand(self, subpart=None, *, resolver=None, ctx=None):
+        subpart = subpart or self.resolver.doc
         resolver = resolver or self.resolver
 
         if "$ref" in subpart:
             try:
                 original = self.accessor.access(subpart["$ref"])
                 ref = subpart.pop("$ref")
-                new_subpart = self.expand_subpart(original, resolver=self.accessor.resolver, ctx=ctx)
+                new_subpart = self.expand(
+                    original, resolver=self.accessor.resolver, ctx=ctx
+                )
                 if detect_circur_reference(subpart, new_subpart):
                     subpart["$ref"] = ref
                 else:
@@ -52,5 +52,7 @@ class Expander(object):
             return subpart
         else:
             for path, sd in self.ref_walking.iterate(subpart):
-                self.expand_subpart(sd, resolver=resolver, ctx=ctx)
+                self.expand(sd, resolver=resolver, ctx=ctx)
             return subpart
+
+    __call__ = expand
