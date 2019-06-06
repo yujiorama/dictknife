@@ -1,4 +1,5 @@
 from .expander import Expander  # noqa
+from .selector import Selector  # noqa
 from .bundler import Bundler, create_scanner_factory_from_flavor  # noqa
 from .separator import Separator  # noqa
 from .resolver import (  # noqa

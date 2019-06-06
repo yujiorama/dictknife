@@ -45,8 +45,10 @@ def select(
     input_format: str,
     output_format: str,
     format: str,
+    no_expand: bool = False,
 ):
     from dictknife.jsonknife import Expander
+    from dictknife.jsonknife import Selector
     from dictknife.jsonknife.accessor import assign_by_json_pointer
     from dictknife.jsonknife import get_resolver
 
@@ -189,7 +191,7 @@ def main():
     sparser.add_argument("-f", "--format", default=None, choices=formats)
     sparser.add_argument("-i", "--input-format", default=None, choices=formats)
     sparser.add_argument("-o", "--output-format", default=None, choices=formats)
-
+    sparser.add_argument("--no-expand", action="store_true")
     # bundle
     fn = bundle
     sparser = subparsers.add_parser(fn.__name__, description=fn.__doc__)
