@@ -403,7 +403,7 @@ def main():
     sparser.add_argument(
         "-o",
         "--output-format",
-        choices=["diff", "dict", "md", "tsv", "jsonpatch"],
+        choices=["diff", "dict", "md", "tsv", "jsonpatch", "yaml"],
         default="diff",
     )
     sparser.add_argument("-S", "--sort-keys", action="store_true")
